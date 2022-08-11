@@ -66,7 +66,6 @@ class _FavouriteQuoteScreenState extends State<FavouriteQuoteScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          filled: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -185,7 +184,17 @@ class _FavouriteQuoteScreenState extends State<FavouriteQuoteScreen> {
       builder: (BuildContext context) {
         String quote = '';
         return AlertDialog(
+          title: const Text(
+            'Enter quote',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           content: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              isDense: true,
+            ),
             onChanged: (value) => quote = value,
           ),
           actions: [

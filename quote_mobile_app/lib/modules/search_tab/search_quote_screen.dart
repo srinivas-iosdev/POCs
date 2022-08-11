@@ -50,7 +50,6 @@ class _SearchQuoteScreenState extends State<SearchQuoteScreen> {
                     child: TextField(
                       controller: _rangeController,
                       decoration: InputDecoration(
-                        filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
@@ -75,7 +74,6 @@ class _SearchQuoteScreenState extends State<SearchQuoteScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          filled: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),

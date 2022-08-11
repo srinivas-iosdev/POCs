@@ -50,7 +50,6 @@ class _AuthorsListScreenState extends State<AuthorsListScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          filled: true,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
