@@ -38,6 +38,7 @@ class Quote {
     this.dateModified,
   });
 
+  @JsonKey(name: '_id')
   String? id;
   String? content;
   String? author;

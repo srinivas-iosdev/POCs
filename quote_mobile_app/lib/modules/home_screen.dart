@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quote_mobile_app/modules/author_tab/author_quote_screen.dart';
+import 'package:quote_mobile_app/modules/author_tab/authors_list_screen.dart';
 import 'package:quote_mobile_app/modules/favourites_module/favourite_quote_screen.dart';
 import 'package:quote_mobile_app/modules/search_tab/search_quote_screen.dart';
 
@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTabIndex = 0;
   final List<Widget> _tabs = [
-    const AuthorQuoteScreen(),
+    const AuthorsListScreen(),
     const SearchQuoteScreen(),
     const FavouriteQuoteScreen(),
   ];

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:quote_mobile_app/models/network/author_response_model.dart';
 import 'package:quote_mobile_app/repository/network/http_manager.dart';
 
-class AuthorQuoteProvider with ChangeNotifier {
+class AuthorsListProvider with ChangeNotifier {
   List<Author> _authorsArray = [];
   UnmodifiableListView<Author> get authors =>
       UnmodifiableListView(_authorsArray);

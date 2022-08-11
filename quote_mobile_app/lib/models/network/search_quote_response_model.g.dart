@@ -31,7 +31,7 @@ Map<String, dynamic> _$SearchQuoteResponseModelToJson(
     };
 
 Quote _$QuoteFromJson(Map<String, dynamic> json) => Quote(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       content: json['content'] as String?,
       author: json['author'] as String?,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -43,7 +43,7 @@ Quote _$QuoteFromJson(Map<String, dynamic> json) => Quote(
     );
 
 Map<String, dynamic> _$QuoteToJson(Quote instance) => <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'content': instance.content,
       'author': instance.author,
       'tags': instance.tags,

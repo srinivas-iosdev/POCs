@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:quote_mobile_app/models/network/search_quote_response_model.dart';
 import 'package:quote_mobile_app/modules/favourites_module/favourite_quotes_provider.dart';
 import 'package:quote_mobile_app/modules/search_tab/search_quote_provider.dart';
-import 'package:quote_mobile_app/repository/localdb/tables/favourite_quote.dart';
+import 'package:quote_mobile_app/utils/constants/app_contants.dart';
+import 'package:quote_mobile_app/utils/custom_widgets/custom_list_tile.dart';
+import 'package:quote_mobile_app/utils/utils.dart';
 
 class SearchQuoteScreen extends StatefulWidget {
   const SearchQuoteScreen({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class _SearchQuoteScreenState extends State<SearchQuoteScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
+              padding: EdgeInsetConstants.kL15T15R15B5,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -63,7 +65,7 @@ class _SearchQuoteScreenState extends State<SearchQuoteScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsetConstants.kAll15,
               child: SizedBox(
                 height: kToolbarHeight,
                 child: Row(
@@ -99,53 +101,76 @@ class _SearchQuoteScreenState extends State<SearchQuoteScreen> {
                 ),
               ),
             ),
-            const Divider(
-              height: 2,
-              color: Colors.grey,
-            ),
+            DividerConstants.kH2,
             Consumer<SearchQuoteProvider>(
               builder: (context, ref, child) {
                 return Expanded(
                   child: ListView.separated(
                     itemBuilder: (BuildContext context, int index) {
                       Quote quote = ref.quotes[index];
-                      Future<bool> isInLocal =
-                          Provider.of<FavouriteQuotesProvider>(context)
-                              .searchFavouriteQuotes(quote.id ?? '');
-                      return ListTile(
-                        title: Text(quote.content ?? ''),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.favorite_border),
-                          onPressed: () {
-                            // insert quote
-                            FavouriteQuote favQuote =
-                                FavouriteQuote().fromJson(quote.toJson());
-                            Provider.of<FavouriteQuotesProvider>(context)
-                                .insertQuote(favQuote);
-                            // show toast
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Added to Favourites'),
-                              ),
-                            );
-                          },
-                        ),
+                      // return ListTile(
+                      //   title: Text(quote.content ?? ''),
+                      //   trailing: IconButton(
+                      //     icon: const Icon(Icons.favorite_border),
+                      //     onPressed: () {
+                      //       addFavouriteQuote(index);
+                      //     },
+                      //   ),
+                      // );
+                      // Quote quote = ref.quotes[index];
+                      return FutureBuilder(
+                        future: Utils.isAlreadySaved(quote),
+                        initialData: false,
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          return CustomListTile(
+                            type: Screens.search_tab,
+                            index: index,
+                            title: quote.content ?? '',
+                            isSelected: (snapshot.data as bool),
+                            deleteAction: addFavouriteQuote,
+                            editAction: null,
+                            selectAction: null,
+                          );
+                        },
                       );
                     },
                     itemCount: ref.quotes.length,
                     separatorBuilder: (BuildContext context, int index) {
-                      return const Divider(
-                        height: 2,
-                        color: Colors.grey,
-                      );
+                      return DividerConstants.kH2;
                     },
                   ),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void addFavouriteQuote(int index) {
+    Quote quote = Provider.of<SearchQuoteProvider>(
+      context,
+      listen: false,
+    ).quotes[index];
+    // insert quote
+    Provider.of<SearchQuoteProvider>(
+      context,
+      listen: false,
+    ).addToFavourites(quote).then((value) {
+      // reload the favourite quotes
+      Provider.of<FavouriteQuotesProvider>(
+        context,
+        listen: false,
+      ).getFavouriteQuotes('');
+      // show toast message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(value),
+        ),
+      );
+      setState(() {});
+    });
   }
 }

@@ -30,7 +30,7 @@ Map<String, dynamic> _$AuthorResponseModelToJson(
     };
 
 Author _$AuthorFromJson(Map<String, dynamic> json) => Author(
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       name: json['name'] as String?,
       link: json['link'] as String?,
       bio: json['bio'] as String?,
@@ -42,7 +42,7 @@ Author _$AuthorFromJson(Map<String, dynamic> json) => Author(
     );
 
 Map<String, dynamic> _$AuthorToJson(Author instance) => <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'name': instance.name,
       'link': instance.link,
       'bio': instance.bio,

@@ -3,7 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:quote_mobile_app/models/network/search_quote_response_model.dart';
+import 'package:quote_mobile_app/repository/localdb/db_manager.dart';
+import 'package:quote_mobile_app/repository/localdb/tables/favourite_quote.dart';
 import 'package:quote_mobile_app/repository/network/http_manager.dart';
+import 'package:quote_mobile_app/utils/utils.dart';
 
 class SearchQuoteProvider with ChangeNotifier {
   List<Quote> _quotesArray = [];
@@ -29,5 +32,19 @@ class SearchQuoteProvider with ChangeNotifier {
         notifyListeners();
       },
     );
+  }
+
+  Future<String> addToFavourites(Quote quote) async {
+    bool isSaved = await Utils.isAlreadySaved(quote);
+
+    if (isSaved) {
+      FavouriteQuote favQuote = Utils.convert(quote);
+      DBManager().deleteQuote(favQuote);
+      return 'Removed to Favourites';
+    } else {
+      FavouriteQuote favQuote = Utils.convert(quote);
+      DBManager().insertQuote(favQuote);
+      return 'Added to Favourites';
+    }
   }
 }

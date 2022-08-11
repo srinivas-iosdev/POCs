@@ -37,6 +37,7 @@ class Author {
     this.dateModified,
   });
 
+  @JsonKey(name: '_id')
   String? id;
   String? name;
   String? link;

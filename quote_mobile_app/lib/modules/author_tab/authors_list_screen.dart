@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quote_mobile_app/models/network/author_response_model.dart';
-import 'package:quote_mobile_app/modules/author_tab/author_quote_provider.dart';
+import 'package:quote_mobile_app/modules/author_tab/authors_list_provider.dart';
+import 'package:quote_mobile_app/utils/constants/app_contants.dart';
 
-class AuthorQuoteScreen extends StatefulWidget {
-  const AuthorQuoteScreen({Key? key}) : super(key: key);
+class AuthorsListScreen extends StatefulWidget {
+  const AuthorsListScreen({Key? key}) : super(key: key);
 
   @override
-  State<AuthorQuoteScreen> createState() => _AuthorQuoteScreenState();
+  State<AuthorsListScreen> createState() => _AuthorsListScreenState();
 }
 
-class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
+class _AuthorsListScreenState extends State<AuthorsListScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -27,7 +28,7 @@ class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
         title: const Text('Authors List'),
       ),
       body: SafeArea(
-        minimum: const EdgeInsets.all(10),
+        minimum: EdgeInsetConstants.kAll10,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +40,7 @@ class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: EdgeInsetConstants.kAll15,
               child: SizedBox(
                 height: kToolbarHeight,
                 child: Row(
@@ -58,9 +59,10 @@ class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
                             icon: const Icon(Icons.search),
                             onPressed: () {
                               FocusScope.of(context).unfocus();
-                              Provider.of<AuthorQuoteProvider>(context,
-                                      listen: false)
-                                  .getQuotes(_searchController.text);
+                              Provider.of<AuthorsListProvider>(
+                                context,
+                                listen: false,
+                              ).getQuotes(_searchController.text);
                             },
                           ),
                         ),
@@ -71,11 +73,8 @@ class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
                 ),
               ),
             ),
-            const Divider(
-              height: 2,
-              color: Colors.grey,
-            ),
-            Consumer<AuthorQuoteProvider>(
+            DividerConstants.kH2,
+            Consumer<AuthorsListProvider>(
               builder: (context, ref, child) {
                 if (ref.authors.isEmpty) {
                   return Center(
@@ -87,13 +86,16 @@ class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
                   );
                 } else {
                   return Expanded(
-                    child: ListView.builder(
+                    child: ListView.separated(
                       itemCount: ref.authors.length,
                       itemBuilder: (BuildContext context, int index) {
                         Author author = ref.authors[index];
                         return ListTile(
                           title: Text(author.name ?? ''),
                         );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return DividerConstants.kH2;
                       },
                     ),
                   );

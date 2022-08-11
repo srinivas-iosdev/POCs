@@ -11,7 +11,7 @@ class DBManager {
     _database = await openDatabase(join(await getDatabasesPath(), sqliteDbName),
         onCreate: (Database db, int version) {
       return db.execute(
-        'CREATE TABLE $_tableName(id INTEGER PRIMARY KEY, name TEXT, content TEXT, author TEXT, length INTEGER, dateAdded TEXT, dateModified TEXT)',
+        'CREATE TABLE $_tableName(id TEXT PRIMARY KEY, name TEXT, content TEXT, author TEXT, length INTEGER, dateAdded TEXT, dateModified TEXT)',
       );
     }, version: 1);
     return _database;

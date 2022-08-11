@@ -52,7 +52,7 @@ class FavouriteQuotesProvider extends ChangeNotifier {
     );
   }
 
-  void deleteAllQuote(FavouriteQuote quote) {
+  void deleteAllQuote() {
     DBManager().deleteAllQuotes().then(
       (value) {
         getFavouriteQuotes('');

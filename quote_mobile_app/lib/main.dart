@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quote_mobile_app/home_screen.dart';
-import 'package:quote_mobile_app/modules/author_tab/author_quote_provider.dart';
+import 'package:quote_mobile_app/modules/home_screen.dart';
+import 'package:quote_mobile_app/modules/author_tab/authors_list_provider.dart';
 import 'package:quote_mobile_app/modules/favourites_module/favourite_quotes_provider.dart';
 import 'package:quote_mobile_app/modules/search_tab/search_quote_provider.dart';
 
@@ -10,7 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => AuthorQuoteProvider(),
+          create: (BuildContext context) => AuthorsListProvider(),
         ),
         ChangeNotifierProvider(
           create: (BuildContext context) => SearchQuoteProvider(),
