@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quote_mobile_app/models/network/search_quote_response_model.dart';
+import 'package:quote_mobile_app/modules/favourites_module/favourite_quotes_provider.dart';
 import 'package:quote_mobile_app/modules/search_tab/search_quote_provider.dart';
+import 'package:quote_mobile_app/repository/localdb/tables/favourite_quote.dart';
 
 class SearchQuoteScreen extends StatefulWidget {
   const SearchQuoteScreen({Key? key}) : super(key: key);
@@ -107,11 +109,20 @@ class _SearchQuoteScreenState extends State<SearchQuoteScreen> {
                   child: ListView.separated(
                     itemBuilder: (BuildContext context, int index) {
                       Quote quote = ref.quotes[index];
+                      Future<bool> isInLocal =
+                          Provider.of<FavouriteQuotesProvider>(context)
+                              .searchFavouriteQuotes(quote.id ?? '');
                       return ListTile(
                         title: Text(quote.content ?? ''),
                         trailing: IconButton(
                           icon: const Icon(Icons.favorite_border),
                           onPressed: () {
+                            // insert quote
+                            FavouriteQuote favQuote =
+                                FavouriteQuote().fromJson(quote.toJson());
+                            Provider.of<FavouriteQuotesProvider>(context)
+                                .insertQuote(favQuote);
+                            // show toast
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Added to Favourites'),

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:quote_mobile_app/models/network/search_quote_response_model.dart';
-import 'package:quote_mobile_app/network/http_service.dart';
+import 'package:quote_mobile_app/repository/network/http_manager.dart';
 
 class SearchQuoteProvider with ChangeNotifier {
   List<Quote> _quotesArray = [];
@@ -18,7 +18,7 @@ class SearchQuoteProvider with ChangeNotifier {
     String baseURL = "api.quotable.io";
     String endPoint = "/search/quotes";
 
-    HttpService.sharedInstance.apiGetRequest(request, endPoint, baseURL).then(
+    HttpManager.sharedInstance.apiGetRequest(request, endPoint, baseURL).then(
       (response) {
         List<Quote>? quotes =
             SearchQuoteResponseModel.fromJson(jsonDecode(response.response))

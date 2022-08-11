@@ -1,12 +1,12 @@
 import 'package:http/http.dart' as http;
 
-class HttpService {
-  static final HttpService sharedInstance = HttpService._internal();
-  factory HttpService() {
+class HttpManager {
+  static final HttpManager sharedInstance = HttpManager._internal();
+  factory HttpManager() {
     return sharedInstance;
   }
 
-  HttpService._internal();
+  HttpManager._internal();
 
   final Map<String, String>? headers = {
     "content-type": "application/json",

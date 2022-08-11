@@ -93,16 +93,6 @@ class _AuthorQuoteScreenState extends State<AuthorQuoteScreen> {
                         Author author = ref.authors[index];
                         return ListTile(
                           title: Text(author.name ?? ''),
-                          // trailing: IconButton(
-                          //   icon: const Icon(Icons.favorite_border),
-                          //   onPressed: () {
-                          //     ScaffoldMessenger.of(context).showSnackBar(
-                          //       const SnackBar(
-                          //         content: Text('Added to Favourites'),
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
                         );
                       },
                     ),

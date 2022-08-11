@@ -15,7 +15,11 @@ class _FavouriteQuoteScreenState extends State<FavouriteQuoteScreen> {
   @override
   void initState() {
     _searchController.text = '';
+
     super.initState();
+    // Fetch data on launch
+    Provider.of<FavouriteQuotesProvider>(context, listen: false)
+        .getFavouriteQuotes('');
   }
 
   @override

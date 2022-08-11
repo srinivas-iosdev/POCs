@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:quote_mobile_app/models/network/author_response_model.dart';
-import 'package:quote_mobile_app/network/http_service.dart';
+import 'package:quote_mobile_app/repository/network/http_manager.dart';
 
 class AuthorQuoteProvider with ChangeNotifier {
   List<Author> _authorsArray = [];
@@ -18,7 +18,7 @@ class AuthorQuoteProvider with ChangeNotifier {
     String baseURL = "api.quotable.io";
     String endPoint = "/search/authors";
 
-    HttpService.sharedInstance.apiGetRequest(request, endPoint, baseURL).then(
+    HttpManager.sharedInstance.apiGetRequest(request, endPoint, baseURL).then(
       (response) {
         List<Author> authors =
             AuthorResponseModel.fromJson(jsonDecode(response.response))

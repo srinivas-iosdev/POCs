@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quote_mobile_app/home_screen.dart';
 import 'package:quote_mobile_app/modules/author_tab/author_quote_provider.dart';
+import 'package:quote_mobile_app/modules/favourites_module/favourite_quotes_provider.dart';
 import 'package:quote_mobile_app/modules/search_tab/search_quote_provider.dart';
 
 void main() {
@@ -13,6 +14,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (BuildContext context) => SearchQuoteProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => FavouriteQuotesProvider(),
         ),
       ],
       child: const MyApp(),
